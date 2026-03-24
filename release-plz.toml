@@ -15,7 +15,9 @@ semver_check = false
 # Publish to crates.io
 publish = true
 
+# Crate lives in a subdirectory
+project_manifest = "crates/rara-style/Cargo.toml"
+
 [[package]]
 name = "rara-style"
-# Only look at crate changes for version bumps
 changelog_path = "crates/rara-style/CHANGELOG.md"
