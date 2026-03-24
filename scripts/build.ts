@@ -201,64 +201,82 @@ pub const BG_ERR: &str = "\\x1b[48;2;${hexToRGBSemicolon(color.err.$value as str
 // ── Pages: style showcase ──
 
 function buildPages(): void {
-  const { color, ansi, typography, spacing, radius, motion } = tokens;
+  const { color, ansi, typography, spacing, radius } = tokens;
   const dir = resolve(root, 'docs');
   mkdirSync(dir, { recursive: true });
 
-  const colorSwatches = Object.entries(color)
+  // Color spec table rows — Dracula pattern: swatch + name + hex + usage
+  const colorRows = Object.entries(color)
     .map(
       ([name, t]) =>
-        `<div class="swatch">
-        <div class="swatch-block" style="background:${t.$value}"></div>
-        <code>${name}</code>
-        <span class="hex">${t.$value}</span>
-      </div>`,
+        `<tr class="color-row" data-hex="${t.$value}">
+          <td><div class="swatch-dot" style="background:${t.$value}"></div></td>
+          <td><code>${name}</code></td>
+          <td class="hex-cell"><code>${t.$value}</code></td>
+          <td class="usage-cell">${t.$description || ''}</td>
+        </tr>`,
     )
-    .join('\n      ');
+    .join('\n');
 
-  const ansiSwatches = Object.entries(ansi)
-    .filter(([, v]) => typeof v === 'object')
-    .map(
-      ([name, t]) =>
-        `<div class="swatch">
-        <div class="swatch-block" style="background:${(t as Token).$value}"></div>
-        <code>${name}</code>
-        <span class="hex">${(t as Token).$value}</span>
-      </div>`,
-    )
-    .join('\n      ');
+  // ANSI rows — normal + bright pairs
+  const ansiNames = [
+    'black',
+    'red',
+    'green',
+    'yellow',
+    'blue',
+    'magenta',
+    'cyan',
+    'white',
+  ] as const;
+  const ansiRows = ansiNames
+    .map((name) => {
+      const normal = (ansi[name] as Token).$value;
+      const bright = (ansi[`bright-${name}`] as Token).$value;
+      return `<tr class="color-row" data-hex="${normal}">
+          <td><div class="ansi-pair"><div class="swatch-dot" style="background:${normal}"></div><div class="swatch-dot" style="background:${bright}"></div></div></td>
+          <td><code>${name}</code></td>
+          <td class="hex-cell"><code>${normal}</code></td>
+          <td class="hex-cell"><code>${bright}</code></td>
+        </tr>`;
+    })
+    .join('\n');
 
-  const typeScale = Object.entries(typography.size)
+  // Type scale
+  const typeRows = Object.entries(typography.size)
     .map(
       ([name, t]) =>
         `<div class="type-row">
         <code class="type-label">text-${name}</code>
-        <span style="font-size:${t.$value}">The quick brown fox</span>
+        <span class="type-value">${t.$value}</span>
+        <span class="type-sample" style="font-size:${t.$value}">The quick brown fox</span>
       </div>`,
     )
-    .join('\n      ');
+    .join('\n');
 
-  const spacingScale = Object.entries(spacing)
+  // Spacing bars
+  const spaceRows = Object.entries(spacing)
     .map(
       ([name, t]) =>
         `<div class="space-row">
         <code>space-${name}</code>
         <div class="space-bar" style="width:${t.$value === '0' ? '2px' : t.$value}"></div>
-        <span class="hex">${t.$value}</span>
+        <span class="dim">${t.$value}</span>
       </div>`,
     )
-    .join('\n      ');
+    .join('\n');
 
-  const radiusScale = Object.entries(radius)
+  // Radius blocks
+  const radiusBlocks = Object.entries(radius)
     .map(
       ([name, t]) =>
         `<div class="radius-item">
         <div class="radius-block" style="border-radius:${t.$value}"></div>
         <code>${name}</code>
-        <span class="hex">${t.$value}</span>
+        <span class="dim">${t.$value}</span>
       </div>`,
     )
-    .join('\n      ');
+    .join('\n');
 
   const html = `<!DOCTYPE html>
 <html lang="en">
@@ -269,206 +287,350 @@ function buildPages(): void {
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --bg: #fafafa; --surface: #fff; --ink: #111; --muted: #666;
-      --line: #e2e2e2; --pop: #4A8FE2; --radius: 8px;
+    *{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --bg:#fafafa;--surface:#fff;--ink:#111;--muted:#666;--subtle:#999;
+      --line:#e2e2e2;--pop:#4A8FE2;--pop-hover:#3A7FD2;
+      --ok:#2DA44E;--warn:#D4A015;--err:#CF222E;
+      --radius:8px;--font-sans:'Inter',system-ui,sans-serif;
+      --font-mono:'JetBrains Mono','SF Mono',ui-monospace,monospace;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: 'Inter', system-ui, sans-serif;
-      background: var(--bg); color: var(--ink);
-      line-height: 1.6; font-size: 16px;
-    }
-    .container { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+    html{scroll-behavior:smooth}
+    body{font-family:var(--font-sans);background:var(--bg);color:var(--ink);line-height:1.6;font-size:16px}
+    code{font-family:var(--font-mono);font-size:0.82rem}
 
-    /* header */
-    header { padding: 48px 0 40px; border-bottom: 1px solid var(--line); }
-    header h1 { font-size: 2.4rem; font-weight: 700; letter-spacing: -0.03em; }
-    header p { color: var(--muted); margin-top: 8px; font-size: 1.05rem; }
-    .badge {
-      display: inline-block; margin-top: 16px; padding: 4px 12px;
-      background: var(--ink); color: #fff; border-radius: 4px;
-      font-family: 'JetBrains Mono', monospace; font-size: 0.8rem;
-    }
+    /* ── Layout ── */
+    .page{display:flex;max-width:1120px;margin:0 auto;min-height:100vh}
+    .sidebar{width:200px;flex-shrink:0;padding:32px 0 32px 24px;position:sticky;top:0;height:100vh;overflow-y:auto}
+    .main{flex:1;min-width:0;padding:0 40px 80px}
 
-    /* sections */
-    section { padding: 48px 0; border-bottom: 1px solid var(--line); }
-    section:last-child { border-bottom: none; }
-    h2 {
-      font-size: 1.4rem; font-weight: 600; letter-spacing: -0.02em;
-      margin-bottom: 24px; display: flex; align-items: center; gap: 10px;
-    }
-    h2 .num { color: var(--pop); font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; }
+    /* ── Sidebar nav ── */
+    .sidebar h4{font-size:0.7rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--subtle);margin:24px 0 8px;font-weight:600}
+    .sidebar h4:first-child{margin-top:0}
+    .sidebar a{display:block;padding:4px 0;color:var(--muted);text-decoration:none;font-size:0.85rem;transition:color 120ms}
+    .sidebar a:hover,.sidebar a.active{color:var(--ink)}
+    .sidebar .brand{font-weight:700;font-size:0.95rem;color:var(--ink);margin-bottom:24px;display:flex;align-items:center;gap:8px}
+    .sidebar .brand-icon{width:18px;height:18px;background:var(--ink);border-radius:4px}
 
-    /* swatches */
-    .swatch-grid {
-      display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 12px;
-    }
-    .swatch { text-align: center; }
-    .swatch-block {
-      width: 100%; aspect-ratio: 1; border-radius: var(--radius);
-      border: 1px solid var(--line);
-    }
-    .swatch code {
-      display: block; margin-top: 8px; font-size: 0.8rem; font-weight: 600;
-      font-family: 'JetBrains Mono', monospace;
-    }
-    .swatch .hex { font-size: 0.75rem; color: var(--muted); }
+    /* ── Header ── */
+    .hero{padding:64px 0 48px;border-bottom:1px solid var(--line)}
+    .hero h1{font-size:clamp(2rem,5vw,3rem);font-weight:700;letter-spacing:-0.03em;line-height:1.1}
+    .hero p{color:var(--muted);margin-top:10px;font-size:1.05rem;max-width:520px}
+    .hero-badges{display:flex;gap:8px;margin-top:20px}
+    .badge{display:inline-block;padding:4px 12px;background:var(--ink);color:#fff;border-radius:4px;font-family:var(--font-mono);font-size:0.78rem}
+    .badge--outline{background:transparent;color:var(--muted);border:1px solid var(--line)}
 
-    /* type scale */
-    .type-row {
-      display: flex; align-items: baseline; gap: 16px;
-      padding: 10px 0; border-bottom: 1px solid var(--line);
-    }
-    .type-row:last-child { border-bottom: none; }
-    .type-label {
-      width: 80px; flex-shrink: 0; font-size: 0.8rem; color: var(--muted);
-      font-family: 'JetBrains Mono', monospace;
-    }
+    /* ── Sections ── */
+    section{padding:48px 0;border-bottom:1px solid var(--line)}
+    section:last-of-type{border-bottom:none}
+    .section-head{display:flex;align-items:center;gap:10px;margin-bottom:24px}
+    .section-head .num{color:var(--pop);font-family:var(--font-mono);font-size:0.85rem;font-weight:600}
+    .section-head h2{font-size:1.3rem;font-weight:600;letter-spacing:-0.02em}
+    .section-note{color:var(--muted);font-size:0.88rem;margin:-16px 0 24px}
 
-    /* spacing */
-    .space-row { display: flex; align-items: center; gap: 12px; padding: 6px 0; }
-    .space-row code {
-      width: 72px; flex-shrink: 0; font-size: 0.8rem;
-      font-family: 'JetBrains Mono', monospace;
-    }
-    .space-bar { height: 12px; background: var(--pop); border-radius: 2px; min-width: 2px; }
-    .hex { font-size: 0.75rem; color: var(--muted); }
+    /* ── Color table (Dracula pattern) ── */
+    .color-table{width:100%;border-collapse:collapse}
+    .color-table th{text-align:left;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--subtle);font-weight:600;padding:0 12px 8px 0}
+    .color-table td{padding:10px 12px 10px 0;border-top:1px solid var(--line);vertical-align:middle}
+    .color-row{cursor:pointer;transition:background 120ms}
+    .color-row:hover{background:rgba(0,0,0,0.02)}
+    .swatch-dot{width:32px;height:32px;border-radius:6px;border:1px solid rgba(0,0,0,0.08);flex-shrink:0}
+    .ansi-pair{display:flex;gap:6px}
+    .hex-cell code{color:var(--muted)}
+    .usage-cell{color:var(--muted);font-size:0.85rem}
 
-    /* radius */
-    .radius-grid { display: flex; gap: 20px; flex-wrap: wrap; }
-    .radius-item { text-align: center; }
-    .radius-block {
-      width: 64px; height: 64px; background: var(--ink); margin-bottom: 8px;
-    }
-    .radius-item code {
-      display: block; font-size: 0.8rem; font-weight: 600;
-      font-family: 'JetBrains Mono', monospace;
-    }
+    /* click-to-copy toast */
+    .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:8px 20px;border-radius:6px;font-size:0.85rem;font-family:var(--font-mono);opacity:0;transition:all 250ms ease;pointer-events:none;z-index:100}
+    .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
-    /* platform cards */
-    .platform-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-    .platform-card {
-      padding: 20px; border: 1px solid var(--line); border-radius: var(--radius);
-      background: var(--surface);
-    }
-    .platform-card h3 { font-size: 0.95rem; margin-bottom: 8px; }
-    .platform-card code {
-      font-size: 0.8rem; color: var(--muted); font-family: 'JetBrains Mono', monospace;
-    }
-    .platform-card pre {
-      margin-top: 12px; padding: 12px; background: var(--bg); border-radius: 6px;
-      font-size: 0.78rem; overflow-x: auto; line-height: 1.5;
-      font-family: 'JetBrains Mono', monospace;
-    }
+    /* ── Live components (Geist pattern) ── */
+    .demo-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:24px}
+    .demo-card{padding:20px;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface)}
+    .demo-card h4{font-size:0.78rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--subtle);margin-bottom:12px;font-weight:600}
 
-    /* terminal preview */
-    .terminal {
-      background: #111; color: #e2e2e2; border-radius: var(--radius);
-      padding: 16px 20px; font-family: 'JetBrains Mono', monospace;
-      font-size: 0.85rem; line-height: 1.8; margin-top: 16px;
-    }
-    .terminal .prompt { color: #4A8FE2; }
-    .terminal .ok { color: #2DA44E; }
-    .terminal .warn { color: #D4A015; }
-    .terminal .err { color: #CF222E; }
-    .terminal .dim { color: #666; }
+    /* mini button demos */
+    .demo-btn{display:inline-flex;align-items:center;padding:8px 20px;border-radius:var(--radius);font-size:0.85rem;font-weight:600;border:none;cursor:pointer;transition:all 150ms}
+    .demo-btn--primary{background:var(--ink);color:#fff}
+    .demo-btn--primary:hover{background:var(--pop)}
+    .demo-btn--outline{background:transparent;color:var(--ink);border:1px solid var(--line)}
+    .demo-btn--outline:hover{border-color:var(--ink)}
+    .demo-btns{display:flex;gap:8px;flex-wrap:wrap}
 
-    footer {
-      padding: 24px 0 48px; font-size: 0.85rem; color: var(--muted);
-      display: flex; justify-content: space-between;
-    }
-    footer a { color: var(--ink); text-decoration: none; font-weight: 600; }
-    footer a:hover { color: var(--pop); }
+    /* mini status demos */
+    .demo-status{display:flex;flex-direction:column;gap:8px}
+    .demo-status-item{display:flex;align-items:center;gap:8px;font-size:0.85rem;padding:6px 10px;border-radius:6px}
+    .demo-status-item .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
 
-    @media (max-width: 640px) {
-      .platform-grid { grid-template-columns: 1fr; }
-      .swatch-grid { grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); }
+    /* annotated UI mockup (Primer pattern) */
+    .mockup{border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;margin-top:24px;background:var(--surface)}
+    .mockup-bar{background:var(--bg);padding:10px 16px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}
+    .mockup-bar span{font-size:0.82rem;font-weight:600}
+    .mockup-bar code{font-size:0.72rem;color:var(--subtle);background:var(--bg);padding:2px 8px;border:1px solid var(--line);border-radius:4px}
+    .mockup-body{padding:20px;display:flex;flex-direction:column;gap:12px}
+    .mockup-row{display:flex;align-items:center;gap:10px;font-size:0.85rem}
+    .mockup-label{position:relative}
+    .mockup-label::after{content:attr(data-token);position:absolute;top:-18px;left:0;font-size:0.65rem;font-family:var(--font-mono);color:var(--pop);white-space:nowrap;background:rgba(74,143,226,0.08);padding:1px 6px;border-radius:3px}
+
+    /* ── Terminal ── */
+    .terminal{background:#111;color:#e2e2e2;border-radius:var(--radius);overflow:hidden;margin-top:16px}
+    .terminal-bar{background:#1a1a1a;padding:8px 14px;display:flex;align-items:center;gap:6px}
+    .terminal-dot{width:10px;height:10px;border-radius:50%;background:#333}
+    .terminal-body{padding:16px 20px;font-family:var(--font-mono);font-size:0.82rem;line-height:2}
+    .terminal-body .prompt{color:${(ansi.blue as Token).$value}}
+    .terminal-body .ok{color:${(ansi.green as Token).$value}}
+    .terminal-body .warn{color:${(ansi.yellow as Token).$value}}
+    .terminal-body .err{color:${(ansi.red as Token).$value}}
+    .terminal-body .dim{color:${(ansi['bright-black'] as Token).$value}}
+    .terminal-body .mag{color:${(ansi.magenta as Token).$value}}
+    .terminal-body .cyan{color:${(ansi.cyan as Token).$value}}
+
+    /* ── Type scale ── */
+    .type-row{display:flex;align-items:baseline;gap:16px;padding:12px 0;border-bottom:1px solid var(--line)}
+    .type-row:last-child{border-bottom:none}
+    .type-label{width:72px;flex-shrink:0;font-family:var(--font-mono);font-size:0.78rem;color:var(--subtle)}
+    .type-value{width:56px;flex-shrink:0;font-family:var(--font-mono);font-size:0.78rem;color:var(--muted)}
+    .type-sample{white-space:nowrap}
+
+    /* ── Spacing ── */
+    .space-row{display:flex;align-items:center;gap:12px;padding:5px 0}
+    .space-row code{width:68px;flex-shrink:0;font-size:0.78rem}
+    .space-bar{height:14px;background:var(--pop);border-radius:2px;min-width:2px;opacity:0.7}
+    .dim{font-size:0.75rem;color:var(--muted);font-family:var(--font-mono)}
+
+    /* ── Radius ── */
+    .radius-grid{display:flex;gap:24px;flex-wrap:wrap}
+    .radius-item{text-align:center}
+    .radius-block{width:64px;height:64px;background:var(--ink);margin-bottom:8px}
+    .radius-item code{display:block;font-size:0.78rem;font-weight:600}
+
+    /* ── Platform cards ── */
+    .platform-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .platform-card{padding:20px;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface)}
+    .platform-card h3{font-size:0.92rem;margin-bottom:4px}
+    .platform-card .path{font-size:0.78rem;color:var(--subtle)}
+    .platform-card pre{margin-top:12px;padding:12px;background:var(--bg);border-radius:6px;font-size:0.78rem;overflow-x:auto;line-height:1.6;font-family:var(--font-mono)}
+
+    /* ── Footer ── */
+    footer{padding:24px 0 48px;font-size:0.85rem;color:var(--muted);display:flex;justify-content:space-between}
+    footer a{color:var(--ink);text-decoration:none;font-weight:600;transition:color 120ms}
+    footer a:hover{color:var(--pop)}
+
+    @media(max-width:768px){
+      .sidebar{display:none}
+      .main{padding:0 20px 60px}
+      .demo-row,.platform-grid{grid-template-columns:1fr}
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <h1>@rararulab/style</h1>
-      <p>Unified design tokens for web, CLI, TUI, and desktop.</p>
-      <span class="badge">v${palette.rararulab ? '0.1.0' : '0.0.0'}</span>
-    </header>
-
-    <section>
-      <h2><span class="num">01</span> Colors</h2>
-      <div class="swatch-grid">
-        ${colorSwatches}
-      </div>
-    </section>
-
-    <section>
-      <h2><span class="num">02</span> ANSI Terminal</h2>
-      <div class="swatch-grid">
-        ${ansiSwatches}
-      </div>
-      <div class="terminal">
-        <div><span class="prompt">$</span> rara build</div>
-        <div><span class="ok">✓</span> compiled 12 crates in 1.2s</div>
-        <div><span class="warn">⚠</span> unused import in lib.rs:14</div>
-        <div><span class="err">✗</span> test_parse_date failed</div>
-        <div><span class="dim">── 11 passed, 1 failed ──</span></div>
-      </div>
-    </section>
-
-    <section>
-      <h2><span class="num">03</span> Type Scale</h2>
-      ${typeScale}
-    </section>
-
-    <section>
-      <h2><span class="num">04</span> Spacing</h2>
-      ${spacingScale}
-    </section>
-
-    <section>
-      <h2><span class="num">05</span> Radius</h2>
-      <div class="radius-grid">
-        ${radiusScale}
-      </div>
-    </section>
-
-    <section>
-      <h2><span class="num">06</span> Platform Outputs</h2>
-      <div class="platform-grid">
-        <div class="platform-card">
-          <h3>Web</h3>
-          <code>platforms/web/tokens.css</code>
-          <pre>color: var(--color-ink);
-background: var(--color-bg);
-border: 1px solid var(--color-line);</pre>
-        </div>
-        <div class="platform-card">
-          <h3>CLI (Rust)</h3>
-          <code>platforms/cli/theme.rs</code>
-          <pre>print!("{}Error:{} broke",
-  style::ERR, style::RESET);</pre>
-        </div>
-        <div class="platform-card">
-          <h3>TUI / Ratatui</h3>
-          <code>platforms/tui/theme.rs</code>
-          <pre>let s = Style::default()
-  .fg(theme::POP);</pre>
-        </div>
-        <div class="platform-card">
-          <h3>Terminal</h3>
-          <code>platforms/terminal/alacritty.toml</code>
-          <pre>[colors.normal]
-blue = "${(tokens.ansi.blue as Token).$value}"</pre>
-        </div>
-      </div>
-    </section>
-
-    <footer>
-      <span>&copy; rararulab</span>
+  <div class="page">
+    <nav class="sidebar">
+      <div class="brand"><div class="brand-icon"></div>rararulab</div>
+      <h4>Foundations</h4>
+      <a href="#colors">Colors</a>
+      <a href="#usage">Usage</a>
+      <a href="#ansi">ANSI Terminal</a>
+      <a href="#type">Typography</a>
+      <a href="#spacing">Spacing</a>
+      <a href="#radius">Radius</a>
+      <h4>Integration</h4>
+      <a href="#platforms">Platforms</a>
+      <h4>Links</h4>
       <a href="https://github.com/rararulab/style">GitHub</a>
-    </footer>
+    </nav>
+
+    <main class="main">
+      <div class="hero">
+        <h1>@rararulab/style</h1>
+        <p>Unified design tokens for web, CLI, TUI, and desktop. One palette, every platform.</p>
+        <div class="hero-badges">
+          <span class="badge">v0.1.0</span>
+          <span class="badge badge--outline">W3C DTCG</span>
+        </div>
+      </div>
+
+      <!-- 01 Colors -->
+      <section id="colors">
+        <div class="section-head"><span class="num">01</span><h2>Colors</h2></div>
+        <p class="section-note">Click any row to copy the hex value. Role-based naming — not tied to any platform.</p>
+        <table class="color-table">
+          <thead><tr><th></th><th>Token</th><th>Hex</th><th>Usage</th></tr></thead>
+          <tbody>${colorRows}</tbody>
+        </table>
+      </section>
+
+      <!-- 02 Usage -->
+      <section id="usage">
+        <div class="section-head"><span class="num">02</span><h2>Usage</h2></div>
+        <p class="section-note">How tokens map to real UI. Labels show the token applied to each element.</p>
+
+        <div class="mockup">
+          <div class="mockup-bar">
+            <span class="mockup-label" data-token="color-ink">rara dashboard</span>
+            <code class="mockup-label" data-token="color-subtle">v0.4.2</code>
+          </div>
+          <div class="mockup-body">
+            <div class="mockup-row">
+              <div class="swatch-dot mockup-label" data-token="color-ok" style="background:var(--ok);width:10px;height:10px;border-radius:50%"></div>
+              <span>12 crates compiled</span>
+            </div>
+            <div class="mockup-row">
+              <div class="swatch-dot mockup-label" data-token="color-warn" style="background:var(--warn);width:10px;height:10px;border-radius:50%"></div>
+              <span style="color:var(--muted)">2 warnings in tenki/src/lib.rs</span>
+            </div>
+            <div class="mockup-row">
+              <div class="swatch-dot mockup-label" data-token="color-err" style="background:var(--err);width:10px;height:10px;border-radius:50%"></div>
+              <span>1 test failed</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="demo-row">
+          <div class="demo-card">
+            <h4>Buttons</h4>
+            <div class="demo-btns">
+              <button class="demo-btn demo-btn--primary">Primary</button>
+              <button class="demo-btn demo-btn--outline">Secondary</button>
+            </div>
+          </div>
+          <div class="demo-card">
+            <h4>Status</h4>
+            <div class="demo-status">
+              <div class="demo-status-item"><div class="dot" style="background:var(--ok)"></div>Build passed</div>
+              <div class="demo-status-item"><div class="dot" style="background:var(--warn)"></div>2 warnings</div>
+              <div class="demo-status-item"><div class="dot" style="background:var(--err)"></div>Deploy failed</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 03 ANSI Terminal -->
+      <section id="ansi">
+        <div class="section-head"><span class="num">03</span><h2>ANSI Terminal</h2></div>
+        <p class="section-note">16-color mapping for terminals, TUIs, and CLI output. Normal + bright pairs.</p>
+        <table class="color-table">
+          <thead><tr><th></th><th>Name</th><th>Normal</th><th>Bright</th></tr></thead>
+          <tbody>${ansiRows}</tbody>
+        </table>
+
+        <div class="terminal">
+          <div class="terminal-bar">
+            <div class="terminal-dot"></div><div class="terminal-dot"></div><div class="terminal-dot"></div>
+          </div>
+          <div class="terminal-body">
+            <div><span class="prompt">$</span> rara build --release</div>
+            <div><span class="cyan">Compiling</span> kotoba v0.3.1</div>
+            <div><span class="cyan">Compiling</span> tenki v0.2.0</div>
+            <div><span class="ok"> Compiled</span> <span class="dim">12 crates in 1.4s</span></div>
+            <div><span class="warn">  warning</span>: unused import <span class="mag">lib.rs:14</span></div>
+            <div><span class="err">    error</span>: test_parse_date <span class="dim">FAILED</span></div>
+            <div><span class="dim">   Result: 11 passed, 1 failed</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 04 Typography -->
+      <section id="type">
+        <div class="section-head"><span class="num">04</span><h2>Typography</h2></div>
+        <p class="section-note">Inter for UI, JetBrains Mono for code. Scale from 0.75rem to 4.5rem.</p>
+        ${typeRows}
+      </section>
+
+      <!-- 05 Spacing -->
+      <section id="spacing">
+        <div class="section-head"><span class="num">05</span><h2>Spacing</h2></div>
+        <p class="section-note">4px base unit. Consistent across all platforms.</p>
+        ${spaceRows}
+      </section>
+
+      <!-- 06 Radius -->
+      <section id="radius">
+        <div class="section-head"><span class="num">06</span><h2>Radius</h2></div>
+        ${radiusBlocks}
+      </section>
+
+      <!-- 07 Platforms -->
+      <section id="platforms">
+        <div class="section-head"><span class="num">07</span><h2>Platform Outputs</h2></div>
+        <p class="section-note">Generated from palette.json. Copy into your project or import as a dependency.</p>
+        <div class="platform-grid">
+          <div class="platform-card">
+            <h3>Web</h3>
+            <span class="path">platforms/web/tokens.css</span>
+            <pre>color: var(--color-ink);
+background: var(--color-bg);
+border: 1px solid var(--color-line);
+font-family: var(--font-sans);</pre>
+          </div>
+          <div class="platform-card">
+            <h3>CLI (Rust)</h3>
+            <span class="path">platforms/cli/theme.rs</span>
+            <pre>use crate::style;
+
+println!("{}Error:{} something broke",
+    style::ERR, style::RESET);
+println!("{}ok{}", style::OK, style::RESET);</pre>
+          </div>
+          <div class="platform-card">
+            <h3>TUI / Ratatui</h3>
+            <span class="path">platforms/tui/theme.rs</span>
+            <pre>use crate::theme;
+
+let style = Style::default()
+    .fg(theme::POP)
+    .bg(theme::BG);</pre>
+          </div>
+          <div class="platform-card">
+            <h3>Terminal Emulator</h3>
+            <span class="path">platforms/terminal/alacritty.toml</span>
+            <pre>[colors.primary]
+background = "${color.bg.$value}"
+foreground = "${color.ink.$value}"
+
+[colors.normal]
+blue = "${(ansi.blue as Token).$value}"</pre>
+          </div>
+        </div>
+      </section>
+
+      <footer>
+        <span>rararulab</span>
+        <a href="https://github.com/rararulab/style">GitHub</a>
+      </footer>
+    </main>
   </div>
+
+  <div class="toast" id="toast">Copied!</div>
+
+  <script>
+    // Click-to-copy on color rows (Tailwind/Catppuccin pattern)
+    document.querySelectorAll('.color-row').forEach(row => {
+      row.addEventListener('click', () => {
+        const hex = row.dataset.hex;
+        if (!hex) return;
+        navigator.clipboard.writeText(hex).then(() => {
+          const toast = document.getElementById('toast');
+          toast.textContent = 'Copied ' + hex;
+          toast.classList.add('show');
+          setTimeout(() => toast.classList.remove('show'), 1200);
+        });
+      });
+    });
+
+    // Sidebar active link tracking
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.sidebar a[href^="#"]');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(l => l.classList.remove('active'));
+          const link = document.querySelector('.sidebar a[href="#' + entry.target.id + '"]');
+          if (link) link.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-20% 0px -60% 0px' });
+    sections.forEach(s => observer.observe(s));
+  </script>
 </body>
 </html>`;
 
