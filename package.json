@@ -4,7 +4,7 @@
   "description": "Rararulab unified design tokens — web, CLI, TUI, desktop",
   "type": "module",
   "scripts": {
-    "build": "node scripts/build.js",
+    "build": "tsx scripts/build.ts",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "prepare": "husky"
@@ -12,7 +12,8 @@
   "devDependencies": {
     "husky": "^9.0.0",
     "prettier": "^3.4.0",
-    "style-dictionary": "^4.3.0"
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0"
   },
   "files": [
     "palette.json",

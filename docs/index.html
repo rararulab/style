@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>@rararulab/style</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #fafafa; --surface: #fff; --ink: #111; --muted: #666;
+      --line: #e2e2e2; --pop: #4A8FE2; --radius: 8px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg); color: var(--ink);
+      line-height: 1.6; font-size: 16px;
+    }
+    .container { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+
+    /* header */
+    header { padding: 48px 0 40px; border-bottom: 1px solid var(--line); }
+    header h1 { font-size: 2.4rem; font-weight: 700; letter-spacing: -0.03em; }
+    header p { color: var(--muted); margin-top: 8px; font-size: 1.05rem; }
+    .badge {
+      display: inline-block; margin-top: 16px; padding: 4px 12px;
+      background: var(--ink); color: #fff; border-radius: 4px;
+      font-family: 'JetBrains Mono', monospace; font-size: 0.8rem;
+    }
+
+    /* sections */
+    section { padding: 48px 0; border-bottom: 1px solid var(--line); }
+    section:last-child { border-bottom: none; }
+    h2 {
+      font-size: 1.4rem; font-weight: 600; letter-spacing: -0.02em;
+      margin-bottom: 24px; display: flex; align-items: center; gap: 10px;
+    }
+    h2 .num { color: var(--pop); font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; }
+
+    /* swatches */
+    .swatch-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 12px;
+    }
+    .swatch { text-align: center; }
+    .swatch-block {
+      width: 100%; aspect-ratio: 1; border-radius: var(--radius);
+      border: 1px solid var(--line);
+    }
+    .swatch code {
+      display: block; margin-top: 8px; font-size: 0.8rem; font-weight: 600;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .swatch .hex { font-size: 0.75rem; color: var(--muted); }
+
+    /* type scale */
+    .type-row {
+      display: flex; align-items: baseline; gap: 16px;
+      padding: 10px 0; border-bottom: 1px solid var(--line);
+    }
+    .type-row:last-child { border-bottom: none; }
+    .type-label {
+      width: 80px; flex-shrink: 0; font-size: 0.8rem; color: var(--muted);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* spacing */
+    .space-row { display: flex; align-items: center; gap: 12px; padding: 6px 0; }
+    .space-row code {
+      width: 72px; flex-shrink: 0; font-size: 0.8rem;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .space-bar { height: 12px; background: var(--pop); border-radius: 2px; min-width: 2px; }
+    .hex { font-size: 0.75rem; color: var(--muted); }
+
+    /* radius */
+    .radius-grid { display: flex; gap: 20px; flex-wrap: wrap; }
+    .radius-item { text-align: center; }
+    .radius-block {
+      width: 64px; height: 64px; background: var(--ink); margin-bottom: 8px;
+    }
+    .radius-item code {
+      display: block; font-size: 0.8rem; font-weight: 600;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* platform cards */
+    .platform-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .platform-card {
+      padding: 20px; border: 1px solid var(--line); border-radius: var(--radius);
+      background: var(--surface);
+    }
+    .platform-card h3 { font-size: 0.95rem; margin-bottom: 8px; }
+    .platform-card code {
+      font-size: 0.8rem; color: var(--muted); font-family: 'JetBrains Mono', monospace;
+    }
+    .platform-card pre {
+      margin-top: 12px; padding: 12px; background: var(--bg); border-radius: 6px;
+      font-size: 0.78rem; overflow-x: auto; line-height: 1.5;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* terminal preview */
+    .terminal {
+      background: #111; color: #e2e2e2; border-radius: var(--radius);
+      padding: 16px 20px; font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem; line-height: 1.8; margin-top: 16px;
+    }
+    .terminal .prompt { color: #4A8FE2; }
+    .terminal .ok { color: #2DA44E; }
+    .terminal .warn { color: #D4A015; }
+    .terminal .err { color: #CF222E; }
+    .terminal .dim { color: #666; }
+
+    footer {
+      padding: 24px 0 48px; font-size: 0.85rem; color: var(--muted);
+      display: flex; justify-content: space-between;
+    }
+    footer a { color: var(--ink); text-decoration: none; font-weight: 600; }
+    footer a:hover { color: var(--pop); }
+
+    @media (max-width: 640px) {
+      .platform-grid { grid-template-columns: 1fr; }
+      .swatch-grid { grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>@rararulab/style</h1>
+      <p>Unified design tokens for web, CLI, TUI, and desktop.</p>
+      <span class="badge">v0.1.0</span>
+    </header>
+
+    <section>
+      <h2><span class="num">01</span> Colors</h2>
+      <div class="swatch-grid">
+        <div class="swatch">
+        <div class="swatch-block" style="background:#111111"></div>
+        <code>ink</code>
+        <span class="hex">#111111</span>
+      </div>
+      <div class="swatch">
+        <div class="swatch-block" style="background:#666666"></div>
+        <code>muted</code>
+        <span class="hex">#666666</span>
+      </div>
+      <div class="swatch">
+        <div class="swatch-block" style="background:#999999"></div>
+        <code>subtle</code>
+        <span class="hex">#999999</span>
+      </div>
+      <div class="swatch">
+        <div class="swatch-block" style="background:#e2e2e2"></div>
+        <code>line</code>
+        <span class="hex">#e2e2e2</span>
+      </div>
+      <div class="swatch">
+        <div class="swatch-block" style="background:#ffffff"></div>
+        <code>surface</code>
+        <span class="hex">#ffffff</span>
+      </div>
+      <div class="swatch">
+        <div class="swatch-block" style="background:#fafafa"></div>
+        <code>bg</code>
+        <span class="hex">#fafafa</span>
+      </div>
+      <div class="swatch">
+        <div class="swatch-block" style="background:#4A8FE2"></div>
+        <code>pop</code>
+        <span class="hex">#4A8FE2</span>
+      </div>
+      <div class="swatch">
+        <div class="swatch-block" style="background:#3A7FD2"></div>
+        <code>pop-hover</code>
+        <span class="hex">#3A7FD2</span>
+      </div>
+      <div class="swatch">
+        <div class="swatch-block" style="background:#2DA44E"></div>
+        <code>ok</code>
+        <span class="hex">#2DA44E</span>
+      </div>
+      <div class="swatch">
+        <div class="swatch-block" style="background:#D4A015"></div>
+        <code>warn</code>
+        <span class="hex">#D4A015</span>
+      </div>
+      <div class="swatch">
+        <div class="swatch-block" style="background:#CF222E"></div>
+        <code>err</code>
+        <span class="hex">#CF222E</span>
+      </div>
+      </div>
+    </section>
+
+    <section>
+      <h2><span class="num">02</span> ANSI Terminal</h2>
+      <div class="swatch-grid">
+        <div class="swatch">
+        <div class="swatch-block" style="background:#111111"></div>
+        <code>black</code>
+        <span class="hex">#111111</span>
+      </div>
+      <div class="swatch">
+        <div class="swatch-block" style="background:#CF222E"></div>
+        <code>red</code>
+        <span class="hex">#CF222E</span>
+      </div>
+      <div class="swatch">
+        <div class="swatch-block" style="background:#2DA44E"></div>
+        <code>green</code>
+        <span class="hex">#2DA44E</span>
+      </div>
+      <div class="swatch">
+        <div class="swatch-block" style="background:#D4A015"></div>
+        <code>yellow</code>
+        <span class="hex">#D4A015</span>
+      </div>
+      <div class="swatch">
+        <div class="swatch-block" style="background:#4A8FE2"></div>
+        <code>blue</code>
+        <span class="hex">#4A8FE2</span>
+      </div>
+      <div class="swatch">
+        <div class="swatch-block" style="background:#8B5CF6"></div>
+        <code>magenta</code>
+        <span class="hex">#8B5CF6</span>
+      </div>
+      <div class="swatch">
+        <div class="swatch-block" style="background:#06B6D4"></div>
+        <code>cyan</code>
+        <span class="hex">#06B6D4</span>
+      </div>
+      <div class="swatch">
+        <div class="swatch-block" style="background:#e2e2e2"></div>
+        <code>white</code>
+        <span class="hex">#e2e2e2</span>
+      </div>
+      <div class="swatch">
+        <div class="swatch-block" style="background:#666666"></div>
+        <code>bright-black</code>
+        <span class="hex">#666666</span>
+      </div>
+      <div class="swatch">
+        <div class="swatch-block" style="background:#E5534B"></div>
+        <code>bright-red</code>
+        <span class="hex">#E5534B</span>
+      </div>
+      <div class="swatch">
+        <div class="swatch-block" style="background:#3FB950"></div>
+        <code>bright-green</code>
+        <span class="hex">#3FB950</span>
+      </div>
+      <div class="swatch">
+        <div class="swatch-block" style="background:#E3B341"></div>
+        <code>bright-yellow</code>
+        <span class="hex">#E3B341</span>
+      </div>
+      <div class="swatch">
+        <div class="swatch-block" style="background:#6CB6FF"></div>
+        <code>bright-blue</code>
+        <span class="hex">#6CB6FF</span>
+      </div>
+      <div class="swatch">
+        <div class="swatch-block" style="background:#A78BFA"></div>
+        <code>bright-magenta</code>
+        <span class="hex">#A78BFA</span>
+      </div>
+      <div class="swatch">
+        <div class="swatch-block" style="background:#22D3EE"></div>
+        <code>bright-cyan</code>
+        <span class="hex">#22D3EE</span>
+      </div>
+      <div class="swatch">
+        <div class="swatch-block" style="background:#fafafa"></div>
+        <code>bright-white</code>
+        <span class="hex">#fafafa</span>
+      </div>
+      </div>
+      <div class="terminal">
+        <div><span class="prompt">$</span> rara build</div>
+        <div><span class="ok">✓</span> compiled 12 crates in 1.2s</div>
+        <div><span class="warn">⚠</span> unused import in lib.rs:14</div>
+        <div><span class="err">✗</span> test_parse_date failed</div>
+        <div><span class="dim">── 11 passed, 1 failed ──</span></div>
+      </div>
+    </section>
+
+    <section>
+      <h2><span class="num">03</span> Type Scale</h2>
+      <div class="type-row">
+        <code class="type-label">text-xs</code>
+        <span style="font-size:0.75rem">The quick brown fox</span>
+      </div>
+      <div class="type-row">
+        <code class="type-label">text-sm</code>
+        <span style="font-size:0.85rem">The quick brown fox</span>
+      </div>
+      <div class="type-row">
+        <code class="type-label">text-base</code>
+        <span style="font-size:1rem">The quick brown fox</span>
+      </div>
+      <div class="type-row">
+        <code class="type-label">text-md</code>
+        <span style="font-size:1.1rem">The quick brown fox</span>
+      </div>
+      <div class="type-row">
+        <code class="type-label">text-lg</code>
+        <span style="font-size:1.4rem">The quick brown fox</span>
+      </div>
+      <div class="type-row">
+        <code class="type-label">text-xl</code>
+        <span style="font-size:2.2rem">The quick brown fox</span>
+      </div>
+      <div class="type-row">
+        <code class="type-label">text-2xl</code>
+        <span style="font-size:3.2rem">The quick brown fox</span>
+      </div>
+      <div class="type-row">
+        <code class="type-label">text-3xl</code>
+        <span style="font-size:4.5rem">The quick brown fox</span>
+      </div>
+    </section>
+
+    <section>
+      <h2><span class="num">04</span> Spacing</h2>
+      <div class="space-row">
+        <code>space-0</code>
+        <div class="space-bar" style="width:2px"></div>
+        <span class="hex">0</span>
+      </div>
+      <div class="space-row">
+        <code>space-1</code>
+        <div class="space-bar" style="width:4px"></div>
+        <span class="hex">4px</span>
+      </div>
+      <div class="space-row">
+        <code>space-2</code>
+        <div class="space-bar" style="width:8px"></div>
+        <span class="hex">8px</span>
+      </div>
+      <div class="space-row">
+        <code>space-3</code>
+        <div class="space-bar" style="width:12px"></div>
+        <span class="hex">12px</span>
+      </div>
+      <div class="space-row">
+        <code>space-4</code>
+        <div class="space-bar" style="width:16px"></div>
+        <span class="hex">16px</span>
+      </div>
+      <div class="space-row">
+        <code>space-5</code>
+        <div class="space-bar" style="width:20px"></div>
+        <span class="hex">20px</span>
+      </div>
+      <div class="space-row">
+        <code>space-6</code>
+        <div class="space-bar" style="width:24px"></div>
+        <span class="hex">24px</span>
+      </div>
+      <div class="space-row">
+        <code>space-8</code>
+        <div class="space-bar" style="width:32px"></div>
+        <span class="hex">32px</span>
+      </div>
+      <div class="space-row">
+        <code>space-10</code>
+        <div class="space-bar" style="width:40px"></div>
+        <span class="hex">40px</span>
+      </div>
+      <div class="space-row">
+        <code>space-12</code>
+        <div class="space-bar" style="width:48px"></div>
+        <span class="hex">48px</span>
+      </div>
+      <div class="space-row">
+        <code>space-16</code>
+        <div class="space-bar" style="width:64px"></div>
+        <span class="hex">64px</span>
+      </div>
+      <div class="space-row">
+        <code>space-20</code>
+        <div class="space-bar" style="width:80px"></div>
+        <span class="hex">80px</span>
+      </div>
+      <div class="space-row">
+        <code>space-24</code>
+        <div class="space-bar" style="width:96px"></div>
+        <span class="hex">96px</span>
+      </div>
+    </section>
+
+    <section>
+      <h2><span class="num">05</span> Radius</h2>
+      <div class="radius-grid">
+        <div class="radius-item">
+        <div class="radius-block" style="border-radius:4px"></div>
+        <code>sm</code>
+        <span class="hex">4px</span>
+      </div>
+      <div class="radius-item">
+        <div class="radius-block" style="border-radius:8px"></div>
+        <code>md</code>
+        <span class="hex">8px</span>
+      </div>
+      <div class="radius-item">
+        <div class="radius-block" style="border-radius:12px"></div>
+        <code>lg</code>
+        <span class="hex">12px</span>
+      </div>
+      <div class="radius-item">
+        <div class="radius-block" style="border-radius:9999px"></div>
+        <code>full</code>
+        <span class="hex">9999px</span>
+      </div>
+      </div>
+    </section>
+
+    <section>
+      <h2><span class="num">06</span> Platform Outputs</h2>
+      <div class="platform-grid">
+        <div class="platform-card">
+          <h3>Web</h3>
+          <code>platforms/web/tokens.css</code>
+          <pre>color: var(--color-ink);
+background: var(--color-bg);
+border: 1px solid var(--color-line);</pre>
+        </div>
+        <div class="platform-card">
+          <h3>CLI (Rust)</h3>
+          <code>platforms/cli/theme.rs</code>
+          <pre>print!("{}Error:{} broke",
+  style::ERR, style::RESET);</pre>
+        </div>
+        <div class="platform-card">
+          <h3>TUI / Ratatui</h3>
+          <code>platforms/tui/theme.rs</code>
+          <pre>let s = Style::default()
+  .fg(theme::POP);</pre>
+        </div>
+        <div class="platform-card">
+          <h3>Terminal</h3>
+          <code>platforms/terminal/alacritty.toml</code>
+          <pre>[colors.normal]
+blue = "#4A8FE2"</pre>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <span>&copy; rararulab</span>
+      <a href="https://github.com/rararulab/style">GitHub</a>
+    </footer>
+  </div>
+</body>
+</html>

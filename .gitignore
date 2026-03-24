@@ -1,3 +1,4 @@
 node_modules/
 platforms/
+dist/
 .DS_Store

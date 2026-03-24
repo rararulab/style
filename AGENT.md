@@ -10,7 +10,8 @@ Unified design token system for all rararulab projects. One `palette.json` gener
 
 ```
 palette.json          ← THE canonical source. Edit ONLY this file for color/token changes.
-scripts/build.js      ← Reads palette.json, generates all platform outputs.
+scripts/build.ts      ← Reads palette.json, generates all platform outputs.
+docs/index.html       ← Generated style guide (GitHub Pages).
 platforms/            ← Generated output. NEVER edit directly — always regenerate.
   web/tokens.css      ← CSS custom properties
   terminal/ansi.json  ← ANSI 16-color mapping
