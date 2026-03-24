@@ -2,25 +2,80 @@
 
 ## Purpose
 
-Unified design token system for all rararulab projects. One `palette.json` generates platform-specific theme files for web, CLI, TUI, and desktop. The visual identity is soft pink, cute, and feminine.
+Unified design token system for all rararulab projects. The visual identity is soft pink, cute, and feminine.
 
 **This is the single source of truth for all visual decisions across rararulab.**
 
 ## Architecture
 
 ```
-palette.json          ← THE canonical source. Edit ONLY this file for color/token changes.
-scripts/build.ts      ← Reads palette.json, generates all platform outputs.
-docs/index.html       ← Generated style guide (GitHub Pages).
-platforms/            ← Generated output. NEVER edit directly — always regenerate.
-  web/tokens.css      ← CSS custom properties
-  terminal/ansi.json  ← ANSI 16-color mapping
+palette.json              ← THE canonical source for all color/token values.
+scripts/build.ts          ← Generates web CSS, terminal configs, docs from palette.json.
+docs/index.html           ← Generated style guide (GitHub Pages).
+platforms/                ← Generated output (gitignored). NEVER edit directly.
+  web/tokens.css          ← CSS custom properties
+  terminal/ansi.json      ← ANSI 16-color mapping
   terminal/alacritty.toml
-  tui/theme.rs        ← Ratatui color constants
-  cli/theme.rs        ← ANSI escape code constants for CLI output
+
+crates/rara-style/        ← Rust crate (published to crates.io). Hand-maintained source.
+  Cargo.toml
+  src/lib.rs
+
+packages/go/              ← Go module (tagged for go get). Hand-maintained source.
+  go.mod
+  style.go
 ```
 
+### What is generated vs hand-maintained
+
+| Path                 | Maintained by            | Gitignored |
+| -------------------- | ------------------------ | ---------- |
+| `platforms/*`        | `build.ts` (generated)   | Yes        |
+| `docs/index.html`    | `build.ts` (generated)   | No         |
+| `crates/rara-style/` | Hand-written Rust source | No         |
+| `packages/go/`       | Hand-written Go source   | No         |
+
+When `palette.json` values change, update **both** the crate and Go package to match.
+
 ## How to Use in Your Project
+
+### Rust CLI / TUI
+
+```bash
+cargo add rara-style                      # CLI (zero deps)
+cargo add rara-style --features ratatui   # TUI (ratatui colors)
+```
+
+```rust
+use rara_style::{OK, ERR, BOLD, RESET};
+
+// Auto-reset via paint()
+eprintln!("{}", OK.paint("build passed"));
+
+// Manual reset
+eprintln!("{}heading{}", BOLD, RESET);
+
+// Ratatui (with feature)
+use rara_style::tui;
+let style = ratatui::style::Style::default().fg(tui::POP).bg(tui::BG);
+
+// Raw hex values
+assert_eq!(rara_style::hex::POP, "#E8788A");
+```
+
+Respects `NO_COLOR` / `CLICOLOR` / `CLICOLOR_FORCE` per <https://no-color.org/>.
+
+### Go TUI (lipgloss)
+
+```bash
+go get github.com/rararulab/style/packages/go
+```
+
+```go
+import rarastyle "github.com/rararulab/style/packages/go"
+
+style := lipgloss.NewStyle().Foreground(rarastyle.Pop).Bold(true)
+```
 
 ### Web (HTML/CSS)
 
@@ -33,24 +88,6 @@ border: 1px solid var(--color-line);
 font-family: var(--font-sans);
 ```
 
-### CLI (Rust)
-
-Copy `platforms/cli/theme.rs` into your project:
-
-```rust
-mod style;
-println!("{}Error:{} something broke", style::ERR, style::RESET);
-```
-
-### TUI / Ratatui (Rust)
-
-Copy `platforms/tui/theme.rs` into your project:
-
-```rust
-mod theme;
-let style = Style::default().fg(theme::POP);
-```
-
 ### Terminal Emulator
 
 Import `platforms/terminal/alacritty.toml` into your Alacritty config, or read `platforms/terminal/ansi.json` for other emulators.
@@ -58,25 +95,29 @@ Import `platforms/terminal/alacritty.toml` into your Alacritty config, or read `
 ## Commands
 
 ```bash
-npm run build          # Regenerate all platform outputs from palette.json
+npm run build          # Regenerate platforms/ and docs from palette.json
 npm run format         # Format source files with Prettier
 npm run format:check   # Check formatting (used in pre-commit)
 ```
 
+## Publishing
+
+- **Rust**: `cd crates/rara-style && cargo publish`
+- **Go**: Tag with `packages/go/vX.Y.Z` for Go module proxy
+- **Web/Terminal**: Generated on build, no publishing needed
+
 ## Critical Invariants
 
-- `palette.json` is the ONLY file you edit for visual changes. Everything in `platforms/` is generated.
-- After changing `palette.json`, run `npm run build` to regenerate outputs.
+- `palette.json` is the canonical source for color values.
+- `crates/rara-style/` and `packages/go/` must stay in sync with palette.json.
 - Colors use role-based names (`ink`, `muted`, `pop`, `ok`, `err`), NEVER platform-specific names.
-- ANSI mappings must stay in sync with the semantic palette — `ansi.blue` = `color.pop`.
-- All generated files include a "do not edit" header.
+- All generated files (`platforms/`) include a "do not edit" header.
 
 ## What NOT To Do
 
 - Do NOT edit files in `platforms/` — they will be overwritten on next build.
 - Do NOT add platform-specific color names to `palette.json` (no `css-bg`, `ansi-red`).
 - Do NOT add new colors without semantic justification — the palette is intentionally minimal.
-- Do NOT remove the ANSI section — CLI/TUI projects depend on it.
 
 ## Token Naming Convention
 
