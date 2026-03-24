@@ -1,0 +1,142 @@
+{
+  "$schema": "https://design-tokens.github.io/community-group/format/",
+  "rararulab": {
+    "$description": "Rararulab canonical palette — single source of truth",
+    "color": {
+      "ink": {
+        "$value": "#111111",
+        "$type": "color",
+        "$description": "Primary text, headings, brand mark"
+      },
+      "muted": {
+        "$value": "#666666",
+        "$type": "color",
+        "$description": "Secondary text, captions, metadata"
+      },
+      "subtle": {
+        "$value": "#999999",
+        "$type": "color",
+        "$description": "Tertiary text, placeholders, disabled"
+      },
+      "line": {
+        "$value": "#e2e2e2",
+        "$type": "color",
+        "$description": "Borders, dividers, separators"
+      },
+      "surface": {
+        "$value": "#ffffff",
+        "$type": "color",
+        "$description": "Cards, panels, elevated surfaces"
+      },
+      "bg": {
+        "$value": "#fafafa",
+        "$type": "color",
+        "$description": "Page background"
+      },
+      "pop": {
+        "$value": "#4A8FE2",
+        "$type": "color",
+        "$description": "Accent — CTAs, links, active states, highlights"
+      },
+      "pop-hover": {
+        "$value": "#3A7FD2",
+        "$type": "color",
+        "$description": "Accent hover/pressed state"
+      },
+      "ok": {
+        "$value": "#2DA44E",
+        "$type": "color",
+        "$description": "Success, passing, positive"
+      },
+      "warn": {
+        "$value": "#D4A015",
+        "$type": "color",
+        "$description": "Warning, caution"
+      },
+      "err": {
+        "$value": "#CF222E",
+        "$type": "color",
+        "$description": "Error, failure, destructive"
+      }
+    },
+    "ansi": {
+      "$description": "Terminal ANSI 16-color mapping",
+      "black": { "$value": "#111111", "$type": "color" },
+      "red": { "$value": "#CF222E", "$type": "color" },
+      "green": { "$value": "#2DA44E", "$type": "color" },
+      "yellow": { "$value": "#D4A015", "$type": "color" },
+      "blue": { "$value": "#4A8FE2", "$type": "color" },
+      "magenta": { "$value": "#8B5CF6", "$type": "color" },
+      "cyan": { "$value": "#06B6D4", "$type": "color" },
+      "white": { "$value": "#e2e2e2", "$type": "color" },
+      "bright-black": { "$value": "#666666", "$type": "color" },
+      "bright-red": { "$value": "#E5534B", "$type": "color" },
+      "bright-green": { "$value": "#3FB950", "$type": "color" },
+      "bright-yellow": { "$value": "#E3B341", "$type": "color" },
+      "bright-blue": { "$value": "#6CB6FF", "$type": "color" },
+      "bright-magenta": { "$value": "#A78BFA", "$type": "color" },
+      "bright-cyan": { "$value": "#22D3EE", "$type": "color" },
+      "bright-white": { "$value": "#fafafa", "$type": "color" }
+    },
+    "typography": {
+      "family": {
+        "sans": {
+          "$value": "'Inter', system-ui, -apple-system, sans-serif",
+          "$type": "fontFamily"
+        },
+        "mono": {
+          "$value": "'JetBrains Mono', 'SF Mono', 'Fira Code', ui-monospace, monospace",
+          "$type": "fontFamily"
+        }
+      },
+      "size": {
+        "xs": { "$value": "0.75rem", "$type": "dimension" },
+        "sm": { "$value": "0.85rem", "$type": "dimension" },
+        "base": { "$value": "1rem", "$type": "dimension" },
+        "md": { "$value": "1.1rem", "$type": "dimension" },
+        "lg": { "$value": "1.4rem", "$type": "dimension" },
+        "xl": { "$value": "2.2rem", "$type": "dimension" },
+        "2xl": { "$value": "3.2rem", "$type": "dimension" },
+        "3xl": { "$value": "4.5rem", "$type": "dimension" }
+      },
+      "weight": {
+        "normal": { "$value": 400, "$type": "fontWeight" },
+        "medium": { "$value": 500, "$type": "fontWeight" },
+        "semibold": { "$value": 600, "$type": "fontWeight" },
+        "bold": { "$value": 700, "$type": "fontWeight" }
+      },
+      "leading": {
+        "tight": { "$value": "1.1", "$type": "number" },
+        "snug": { "$value": "1.3", "$type": "number" },
+        "normal": { "$value": "1.6", "$type": "number" },
+        "loose": { "$value": "1.8", "$type": "number" }
+      }
+    },
+    "spacing": {
+      "0": { "$value": "0", "$type": "dimension" },
+      "1": { "$value": "4px", "$type": "dimension" },
+      "2": { "$value": "8px", "$type": "dimension" },
+      "3": { "$value": "12px", "$type": "dimension" },
+      "4": { "$value": "16px", "$type": "dimension" },
+      "5": { "$value": "20px", "$type": "dimension" },
+      "6": { "$value": "24px", "$type": "dimension" },
+      "8": { "$value": "32px", "$type": "dimension" },
+      "10": { "$value": "40px", "$type": "dimension" },
+      "12": { "$value": "48px", "$type": "dimension" },
+      "16": { "$value": "64px", "$type": "dimension" },
+      "20": { "$value": "80px", "$type": "dimension" },
+      "24": { "$value": "96px", "$type": "dimension" }
+    },
+    "radius": {
+      "sm": { "$value": "4px", "$type": "dimension" },
+      "md": { "$value": "8px", "$type": "dimension" },
+      "lg": { "$value": "12px", "$type": "dimension" },
+      "full": { "$value": "9999px", "$type": "dimension" }
+    },
+    "motion": {
+      "fast": { "$value": "150ms", "$type": "duration" },
+      "normal": { "$value": "250ms", "$type": "duration" },
+      "slow": { "$value": "500ms", "$type": "duration" }
+    }
+  }
+}

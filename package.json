@@ -1,0 +1,23 @@
+{
+  "name": "@rararulab/style",
+  "version": "0.1.0",
+  "description": "Rararulab unified design tokens — web, CLI, TUI, desktop",
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.js",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "husky": "^9.0.0",
+    "prettier": "^3.4.0",
+    "style-dictionary": "^4.3.0"
+  },
+  "files": [
+    "palette.json",
+    "tokens/",
+    "platforms/"
+  ],
+  "license": "MIT"
+}
