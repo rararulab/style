@@ -18,3 +18,14 @@ publish = true
 [[package]]
 name = "rara-style"
 changelog_path = "crates/rara-style/CHANGELOG.md"
+git_release_body = """
+{{ changelog }}
+
+---
+
+📦 Published to [crates.io](https://crates.io/crates/rara-style/{{ version }})
+
+```bash
+cargo add rara-style
+```
+"""
