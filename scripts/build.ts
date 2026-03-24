@@ -283,17 +283,17 @@ function buildPages(): void {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>@rararulab/style</title>
+  <title>rara style</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
     :root{
-      --bg:#fafafa;--surface:#fff;--ink:#111;--muted:#666;--subtle:#999;
-      --line:#e2e2e2;--pop:#4A8FE2;--pop-hover:#3A7FD2;
-      --ok:#2DA44E;--warn:#D4A015;--err:#CF222E;
-      --radius:8px;--font-sans:'Inter',system-ui,sans-serif;
-      --font-mono:'JetBrains Mono','SF Mono',ui-monospace,monospace;
+      --bg:${color.bg.$value};--surface:${color.surface.$value};--ink:${color.ink.$value};--muted:${color.muted.$value};--subtle:${color.subtle.$value};
+      --line:${color.line.$value};--pop:${color.pop.$value};--pop-hover:${color['pop-hover'].$value};
+      --ok:${color.ok.$value};--warn:${color.warn.$value};--err:${color.err.$value};
+      --radius:${radius.md.$value};--font-sans:${typography.family.sans.$value};
+      --font-mono:${typography.family.mono.$value};
     }
     html{scroll-behavior:smooth}
     body{font-family:var(--font-sans);background:var(--bg);color:var(--ink);line-height:1.6;font-size:16px}
@@ -310,14 +310,14 @@ function buildPages(): void {
     .sidebar a{display:block;padding:4px 0;color:var(--muted);text-decoration:none;font-size:0.85rem;transition:color 120ms}
     .sidebar a:hover,.sidebar a.active{color:var(--ink)}
     .sidebar .brand{font-weight:700;font-size:0.95rem;color:var(--ink);margin-bottom:24px;display:flex;align-items:center;gap:8px}
-    .sidebar .brand-icon{width:18px;height:18px;background:var(--ink);border-radius:4px}
+    .sidebar .brand-icon{width:18px;height:18px;background:var(--pop);border-radius:6px}
 
     /* ── Header ── */
     .hero{padding:64px 0 48px;border-bottom:1px solid var(--line)}
     .hero h1{font-size:clamp(2rem,5vw,3rem);font-weight:700;letter-spacing:-0.03em;line-height:1.1}
     .hero p{color:var(--muted);margin-top:10px;font-size:1.05rem;max-width:520px}
     .hero-badges{display:flex;gap:8px;margin-top:20px}
-    .badge{display:inline-block;padding:4px 12px;background:var(--ink);color:#fff;border-radius:4px;font-family:var(--font-mono);font-size:0.78rem}
+    .badge{display:inline-block;padding:4px 12px;background:var(--pop);color:#fff;border-radius:var(--radius);font-family:var(--font-mono);font-size:0.78rem}
     .badge--outline{background:transparent;color:var(--muted);border:1px solid var(--line)}
 
     /* ── Sections ── */
@@ -340,7 +340,7 @@ function buildPages(): void {
     .usage-cell{color:var(--muted);font-size:0.85rem}
 
     /* click-to-copy toast */
-    .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:8px 20px;border-radius:6px;font-size:0.85rem;font-family:var(--font-mono);opacity:0;transition:all 250ms ease;pointer-events:none;z-index:100}
+    .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--pop);color:#fff;padding:8px 20px;border-radius:6px;font-size:0.85rem;font-family:var(--font-mono);opacity:0;transition:all 250ms ease;pointer-events:none;z-index:100}
     .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
     /* ── Live components (Geist pattern) ── */
@@ -350,8 +350,8 @@ function buildPages(): void {
 
     /* mini button demos */
     .demo-btn{display:inline-flex;align-items:center;padding:8px 20px;border-radius:var(--radius);font-size:0.85rem;font-weight:600;border:none;cursor:pointer;transition:all 150ms}
-    .demo-btn--primary{background:var(--ink);color:#fff}
-    .demo-btn--primary:hover{background:var(--pop)}
+    .demo-btn--primary{background:var(--pop);color:#fff}
+    .demo-btn--primary:hover{background:var(--pop-hover)}
     .demo-btn--outline{background:transparent;color:var(--ink);border:1px solid var(--line)}
     .demo-btn--outline:hover{border-color:var(--ink)}
     .demo-btns{display:flex;gap:8px;flex-wrap:wrap}
@@ -372,9 +372,9 @@ function buildPages(): void {
     .mockup-label::after{content:attr(data-token);position:absolute;top:-18px;left:0;font-size:0.65rem;font-family:var(--font-mono);color:var(--pop);white-space:nowrap;background:rgba(74,143,226,0.08);padding:1px 6px;border-radius:3px}
 
     /* ── Terminal ── */
-    .terminal{background:#111;color:#e2e2e2;border-radius:var(--radius);overflow:hidden;margin-top:16px}
-    .terminal-bar{background:#1a1a1a;padding:8px 14px;display:flex;align-items:center;gap:6px}
-    .terminal-dot{width:10px;height:10px;border-radius:50%;background:#333}
+    .terminal{background:${color.ink.$value};color:${color.line.$value};border-radius:var(--radius);overflow:hidden;margin-top:16px}
+    .terminal-bar{background:#2E1F22;padding:8px 14px;display:flex;align-items:center;gap:6px}
+    .terminal-dot{width:10px;height:10px;border-radius:50%;background:#4A3538}
     .terminal-body{padding:16px 20px;font-family:var(--font-mono);font-size:0.82rem;line-height:2}
     .terminal-body .prompt{color:${(ansi.blue as Token).$value}}
     .terminal-body .ok{color:${(ansi.green as Token).$value}}
@@ -400,7 +400,7 @@ function buildPages(): void {
     /* ── Radius ── */
     .radius-grid{display:flex;gap:24px;flex-wrap:wrap}
     .radius-item{text-align:center}
-    .radius-block{width:64px;height:64px;background:var(--ink);margin-bottom:8px}
+    .radius-block{width:64px;height:64px;background:var(--pop);margin-bottom:8px}
     .radius-item code{display:block;font-size:0.78rem;font-weight:600}
 
     /* ── Platform cards ── */
@@ -441,8 +441,8 @@ function buildPages(): void {
 
     <main class="main">
       <div class="hero">
-        <h1>@rararulab/style</h1>
-        <p>Unified design tokens for web, CLI, TUI, and desktop. One palette, every platform.</p>
+        <h1>rara</h1>
+        <p>Soft, cute, unified design tokens for web, CLI, TUI, and desktop. One palette, every platform.</p>
         <div class="hero-badges">
           <span class="badge">v0.1.0</span>
           <span class="badge badge--outline">W3C DTCG</span>

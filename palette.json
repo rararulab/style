@@ -1,87 +1,87 @@
 {
   "$schema": "https://design-tokens.github.io/community-group/format/",
   "rararulab": {
-    "$description": "Rararulab canonical palette — single source of truth",
+    "$description": "rara — soft pink, cute, feminine design tokens",
     "color": {
       "ink": {
-        "$value": "#111111",
+        "$value": "#3D2B2E",
         "$type": "color",
-        "$description": "Primary text, headings, brand mark"
+        "$description": "Primary text, headings, brand mark — warm dark brown"
       },
       "muted": {
-        "$value": "#666666",
+        "$value": "#8C7478",
         "$type": "color",
-        "$description": "Secondary text, captions, metadata"
+        "$description": "Secondary text, captions, metadata — dusty rose gray"
       },
       "subtle": {
-        "$value": "#999999",
+        "$value": "#B8A0A4",
         "$type": "color",
-        "$description": "Tertiary text, placeholders, disabled"
+        "$description": "Tertiary text, placeholders, disabled — soft mauve"
       },
       "line": {
-        "$value": "#e2e2e2",
+        "$value": "#F0DEE0",
         "$type": "color",
-        "$description": "Borders, dividers, separators"
+        "$description": "Borders, dividers, separators — blush pink"
       },
       "surface": {
-        "$value": "#ffffff",
+        "$value": "#FFFBFB",
         "$type": "color",
-        "$description": "Cards, panels, elevated surfaces"
+        "$description": "Cards, panels, elevated surfaces — warm white"
       },
       "bg": {
-        "$value": "#fafafa",
+        "$value": "#FFF5F6",
         "$type": "color",
-        "$description": "Page background"
+        "$description": "Page background — lightest pink tint"
       },
       "pop": {
-        "$value": "#4A8FE2",
+        "$value": "#E8788A",
         "$type": "color",
-        "$description": "Accent — CTAs, links, active states, highlights"
+        "$description": "Accent — CTAs, links, active states, highlights — coral pink"
       },
       "pop-hover": {
-        "$value": "#3A7FD2",
+        "$value": "#D4606F",
         "$type": "color",
-        "$description": "Accent hover/pressed state"
+        "$description": "Accent hover/pressed state — deeper rose"
       },
       "ok": {
-        "$value": "#2DA44E",
+        "$value": "#7BC4A0",
         "$type": "color",
-        "$description": "Success, passing, positive"
+        "$description": "Success, passing, positive — soft mint green"
       },
       "warn": {
-        "$value": "#D4A015",
+        "$value": "#E8B86D",
         "$type": "color",
-        "$description": "Warning, caution"
+        "$description": "Warning, caution — warm peach gold"
       },
       "err": {
-        "$value": "#CF222E",
+        "$value": "#D46A6A",
         "$type": "color",
-        "$description": "Error, failure, destructive"
+        "$description": "Error, failure, destructive — muted red"
       }
     },
     "ansi": {
-      "$description": "Terminal ANSI 16-color mapping",
-      "black": { "$value": "#111111", "$type": "color" },
-      "red": { "$value": "#CF222E", "$type": "color" },
-      "green": { "$value": "#2DA44E", "$type": "color" },
-      "yellow": { "$value": "#D4A015", "$type": "color" },
-      "blue": { "$value": "#4A8FE2", "$type": "color" },
-      "magenta": { "$value": "#8B5CF6", "$type": "color" },
-      "cyan": { "$value": "#06B6D4", "$type": "color" },
-      "white": { "$value": "#e2e2e2", "$type": "color" },
-      "bright-black": { "$value": "#666666", "$type": "color" },
-      "bright-red": { "$value": "#E5534B", "$type": "color" },
-      "bright-green": { "$value": "#3FB950", "$type": "color" },
-      "bright-yellow": { "$value": "#E3B341", "$type": "color" },
-      "bright-blue": { "$value": "#6CB6FF", "$type": "color" },
-      "bright-magenta": { "$value": "#A78BFA", "$type": "color" },
-      "bright-cyan": { "$value": "#22D3EE", "$type": "color" },
-      "bright-white": { "$value": "#fafafa", "$type": "color" }
+      "$description": "Terminal ANSI 16-color mapping — rara pink palette",
+      "black": { "$value": "#3D2B2E", "$type": "color" },
+      "red": { "$value": "#D46A6A", "$type": "color" },
+      "green": { "$value": "#7BC4A0", "$type": "color" },
+      "yellow": { "$value": "#E8B86D", "$type": "color" },
+      "blue": { "$value": "#9BAFD9", "$type": "color" },
+      "magenta": { "$value": "#E8788A", "$type": "color" },
+      "cyan": { "$value": "#85C7C9", "$type": "color" },
+      "white": { "$value": "#F0DEE0", "$type": "color" },
+      "bright-black": { "$value": "#8C7478", "$type": "color" },
+      "bright-red": { "$value": "#E89090", "$type": "color" },
+      "bright-green": { "$value": "#A0D9BF", "$type": "color" },
+      "bright-yellow": { "$value": "#F0D090", "$type": "color" },
+      "bright-blue": { "$value": "#B8CCE8", "$type": "color" },
+      "bright-magenta": { "$value": "#F0A0B0", "$type": "color" },
+      "bright-cyan": { "$value": "#A8D8D8", "$type": "color" },
+      "bright-white": { "$value": "#FFF5F6", "$type": "color" }
     },
     "typography": {
       "family": {
         "sans": {
-          "$value": "'Inter', system-ui, -apple-system, sans-serif",
+          "$value": "'Nunito', 'Inter', system-ui, -apple-system, sans-serif",
           "$type": "fontFamily"
         },
         "mono": {
@@ -128,9 +128,9 @@
       "24": { "$value": "96px", "$type": "dimension" }
     },
     "radius": {
-      "sm": { "$value": "4px", "$type": "dimension" },
-      "md": { "$value": "8px", "$type": "dimension" },
-      "lg": { "$value": "12px", "$type": "dimension" },
+      "sm": { "$value": "6px", "$type": "dimension" },
+      "md": { "$value": "12px", "$type": "dimension" },
+      "lg": { "$value": "16px", "$type": "dimension" },
       "full": { "$value": "9999px", "$type": "dimension" }
     },
     "motion": {

@@ -1,8 +1,8 @@
-# @rararulab/style — Agent Guidelines
+# rara — Agent Guidelines
 
 ## Purpose
 
-Unified design token system for all rararulab projects. One `palette.json` generates platform-specific theme files for web, CLI, TUI, and desktop.
+Unified design token system for all rararulab projects. One `palette.json` generates platform-specific theme files for web, CLI, TUI, and desktop. The visual identity is soft pink, cute, and feminine.
 
 **This is the single source of truth for all visual decisions across rararulab.**
 

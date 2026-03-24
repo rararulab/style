@@ -1,5 +1,5 @@
 {
-  "name": "@rararulab/style",
+  "name": "@rararulab/rara",
   "version": "0.1.0",
   "description": "Rararulab unified design tokens — web, CLI, TUI, desktop",
   "type": "module",

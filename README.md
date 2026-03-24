@@ -1,6 +1,6 @@
-# @rararulab/style
+# rara
 
-Unified design tokens for all rararulab projects — web, CLI, TUI, desktop.
+Soft, cute, unified design tokens for all rararulab projects — web, CLI, TUI, desktop.
 
 One `palette.json` generates platform-specific theme files.
 

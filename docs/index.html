@@ -3,17 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>@rararulab/style</title>
+  <title>rara style</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
     :root{
-      --bg:#fafafa;--surface:#fff;--ink:#111;--muted:#666;--subtle:#999;
-      --line:#e2e2e2;--pop:#4A8FE2;--pop-hover:#3A7FD2;
-      --ok:#2DA44E;--warn:#D4A015;--err:#CF222E;
-      --radius:8px;--font-sans:'Inter',system-ui,sans-serif;
-      --font-mono:'JetBrains Mono','SF Mono',ui-monospace,monospace;
+      --bg:#FFF5F6;--surface:#FFFBFB;--ink:#3D2B2E;--muted:#8C7478;--subtle:#B8A0A4;
+      --line:#F0DEE0;--pop:#E8788A;--pop-hover:#D4606F;
+      --ok:#7BC4A0;--warn:#E8B86D;--err:#D46A6A;
+      --radius:12px;--font-sans:'Nunito', 'Inter', system-ui, -apple-system, sans-serif;
+      --font-mono:'JetBrains Mono', 'SF Mono', 'Fira Code', ui-monospace, monospace;
     }
     html{scroll-behavior:smooth}
     body{font-family:var(--font-sans);background:var(--bg);color:var(--ink);line-height:1.6;font-size:16px}
@@ -30,14 +30,14 @@
     .sidebar a{display:block;padding:4px 0;color:var(--muted);text-decoration:none;font-size:0.85rem;transition:color 120ms}
     .sidebar a:hover,.sidebar a.active{color:var(--ink)}
     .sidebar .brand{font-weight:700;font-size:0.95rem;color:var(--ink);margin-bottom:24px;display:flex;align-items:center;gap:8px}
-    .sidebar .brand-icon{width:18px;height:18px;background:var(--ink);border-radius:4px}
+    .sidebar .brand-icon{width:18px;height:18px;background:var(--pop);border-radius:6px}
 
     /* ── Header ── */
     .hero{padding:64px 0 48px;border-bottom:1px solid var(--line)}
     .hero h1{font-size:clamp(2rem,5vw,3rem);font-weight:700;letter-spacing:-0.03em;line-height:1.1}
     .hero p{color:var(--muted);margin-top:10px;font-size:1.05rem;max-width:520px}
     .hero-badges{display:flex;gap:8px;margin-top:20px}
-    .badge{display:inline-block;padding:4px 12px;background:var(--ink);color:#fff;border-radius:4px;font-family:var(--font-mono);font-size:0.78rem}
+    .badge{display:inline-block;padding:4px 12px;background:var(--pop);color:#fff;border-radius:var(--radius);font-family:var(--font-mono);font-size:0.78rem}
     .badge--outline{background:transparent;color:var(--muted);border:1px solid var(--line)}
 
     /* ── Sections ── */
@@ -60,7 +60,7 @@
     .usage-cell{color:var(--muted);font-size:0.85rem}
 
     /* click-to-copy toast */
-    .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:8px 20px;border-radius:6px;font-size:0.85rem;font-family:var(--font-mono);opacity:0;transition:all 250ms ease;pointer-events:none;z-index:100}
+    .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--pop);color:#fff;padding:8px 20px;border-radius:6px;font-size:0.85rem;font-family:var(--font-mono);opacity:0;transition:all 250ms ease;pointer-events:none;z-index:100}
     .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
     /* ── Live components (Geist pattern) ── */
@@ -70,8 +70,8 @@
 
     /* mini button demos */
     .demo-btn{display:inline-flex;align-items:center;padding:8px 20px;border-radius:var(--radius);font-size:0.85rem;font-weight:600;border:none;cursor:pointer;transition:all 150ms}
-    .demo-btn--primary{background:var(--ink);color:#fff}
-    .demo-btn--primary:hover{background:var(--pop)}
+    .demo-btn--primary{background:var(--pop);color:#fff}
+    .demo-btn--primary:hover{background:var(--pop-hover)}
     .demo-btn--outline{background:transparent;color:var(--ink);border:1px solid var(--line)}
     .demo-btn--outline:hover{border-color:var(--ink)}
     .demo-btns{display:flex;gap:8px;flex-wrap:wrap}
@@ -92,17 +92,17 @@
     .mockup-label::after{content:attr(data-token);position:absolute;top:-18px;left:0;font-size:0.65rem;font-family:var(--font-mono);color:var(--pop);white-space:nowrap;background:rgba(74,143,226,0.08);padding:1px 6px;border-radius:3px}
 
     /* ── Terminal ── */
-    .terminal{background:#111;color:#e2e2e2;border-radius:var(--radius);overflow:hidden;margin-top:16px}
-    .terminal-bar{background:#1a1a1a;padding:8px 14px;display:flex;align-items:center;gap:6px}
-    .terminal-dot{width:10px;height:10px;border-radius:50%;background:#333}
+    .terminal{background:#3D2B2E;color:#F0DEE0;border-radius:var(--radius);overflow:hidden;margin-top:16px}
+    .terminal-bar{background:#2E1F22;padding:8px 14px;display:flex;align-items:center;gap:6px}
+    .terminal-dot{width:10px;height:10px;border-radius:50%;background:#4A3538}
     .terminal-body{padding:16px 20px;font-family:var(--font-mono);font-size:0.82rem;line-height:2}
-    .terminal-body .prompt{color:#4A8FE2}
-    .terminal-body .ok{color:#2DA44E}
-    .terminal-body .warn{color:#D4A015}
-    .terminal-body .err{color:#CF222E}
-    .terminal-body .dim{color:#666666}
-    .terminal-body .mag{color:#8B5CF6}
-    .terminal-body .cyan{color:#06B6D4}
+    .terminal-body .prompt{color:#9BAFD9}
+    .terminal-body .ok{color:#7BC4A0}
+    .terminal-body .warn{color:#E8B86D}
+    .terminal-body .err{color:#D46A6A}
+    .terminal-body .dim{color:#8C7478}
+    .terminal-body .mag{color:#E8788A}
+    .terminal-body .cyan{color:#85C7C9}
 
     /* ── Type scale ── */
     .type-row{display:flex;align-items:baseline;gap:16px;padding:12px 0;border-bottom:1px solid var(--line)}
@@ -120,7 +120,7 @@
     /* ── Radius ── */
     .radius-grid{display:flex;gap:24px;flex-wrap:wrap}
     .radius-item{text-align:center}
-    .radius-block{width:64px;height:64px;background:var(--ink);margin-bottom:8px}
+    .radius-block{width:64px;height:64px;background:var(--pop);margin-bottom:8px}
     .radius-item code{display:block;font-size:0.78rem;font-weight:600}
 
     /* ── Platform cards ── */
@@ -161,8 +161,8 @@
 
     <main class="main">
       <div class="hero">
-        <h1>@rararulab/style</h1>
-        <p>Unified design tokens for web, CLI, TUI, and desktop. One palette, every platform.</p>
+        <h1>rara</h1>
+        <p>Soft, cute, unified design tokens for web, CLI, TUI, and desktop. One palette, every platform.</p>
         <div class="hero-badges">
           <span class="badge">v0.1.0</span>
           <span class="badge badge--outline">W3C DTCG</span>
@@ -175,71 +175,71 @@
         <p class="section-note">Click any row to copy the hex value. Role-based naming — not tied to any platform.</p>
         <table class="color-table">
           <thead><tr><th></th><th>Token</th><th>Hex</th><th>Usage</th></tr></thead>
-          <tbody><tr class="color-row" data-hex="#111111">
-          <td><div class="swatch-dot" style="background:#111111"></div></td>
+          <tbody><tr class="color-row" data-hex="#3D2B2E">
+          <td><div class="swatch-dot" style="background:#3D2B2E"></div></td>
           <td><code>ink</code></td>
-          <td class="hex-cell"><code>#111111</code></td>
-          <td class="usage-cell">Primary text, headings, brand mark</td>
+          <td class="hex-cell"><code>#3D2B2E</code></td>
+          <td class="usage-cell">Primary text, headings, brand mark — warm dark brown</td>
         </tr>
-<tr class="color-row" data-hex="#666666">
-          <td><div class="swatch-dot" style="background:#666666"></div></td>
+<tr class="color-row" data-hex="#8C7478">
+          <td><div class="swatch-dot" style="background:#8C7478"></div></td>
           <td><code>muted</code></td>
-          <td class="hex-cell"><code>#666666</code></td>
-          <td class="usage-cell">Secondary text, captions, metadata</td>
+          <td class="hex-cell"><code>#8C7478</code></td>
+          <td class="usage-cell">Secondary text, captions, metadata — dusty rose gray</td>
         </tr>
-<tr class="color-row" data-hex="#999999">
-          <td><div class="swatch-dot" style="background:#999999"></div></td>
+<tr class="color-row" data-hex="#B8A0A4">
+          <td><div class="swatch-dot" style="background:#B8A0A4"></div></td>
           <td><code>subtle</code></td>
-          <td class="hex-cell"><code>#999999</code></td>
-          <td class="usage-cell">Tertiary text, placeholders, disabled</td>
+          <td class="hex-cell"><code>#B8A0A4</code></td>
+          <td class="usage-cell">Tertiary text, placeholders, disabled — soft mauve</td>
         </tr>
-<tr class="color-row" data-hex="#e2e2e2">
-          <td><div class="swatch-dot" style="background:#e2e2e2"></div></td>
+<tr class="color-row" data-hex="#F0DEE0">
+          <td><div class="swatch-dot" style="background:#F0DEE0"></div></td>
           <td><code>line</code></td>
-          <td class="hex-cell"><code>#e2e2e2</code></td>
-          <td class="usage-cell">Borders, dividers, separators</td>
+          <td class="hex-cell"><code>#F0DEE0</code></td>
+          <td class="usage-cell">Borders, dividers, separators — blush pink</td>
         </tr>
-<tr class="color-row" data-hex="#ffffff">
-          <td><div class="swatch-dot" style="background:#ffffff"></div></td>
+<tr class="color-row" data-hex="#FFFBFB">
+          <td><div class="swatch-dot" style="background:#FFFBFB"></div></td>
           <td><code>surface</code></td>
-          <td class="hex-cell"><code>#ffffff</code></td>
-          <td class="usage-cell">Cards, panels, elevated surfaces</td>
+          <td class="hex-cell"><code>#FFFBFB</code></td>
+          <td class="usage-cell">Cards, panels, elevated surfaces — warm white</td>
         </tr>
-<tr class="color-row" data-hex="#fafafa">
-          <td><div class="swatch-dot" style="background:#fafafa"></div></td>
+<tr class="color-row" data-hex="#FFF5F6">
+          <td><div class="swatch-dot" style="background:#FFF5F6"></div></td>
           <td><code>bg</code></td>
-          <td class="hex-cell"><code>#fafafa</code></td>
-          <td class="usage-cell">Page background</td>
+          <td class="hex-cell"><code>#FFF5F6</code></td>
+          <td class="usage-cell">Page background — lightest pink tint</td>
         </tr>
-<tr class="color-row" data-hex="#4A8FE2">
-          <td><div class="swatch-dot" style="background:#4A8FE2"></div></td>
+<tr class="color-row" data-hex="#E8788A">
+          <td><div class="swatch-dot" style="background:#E8788A"></div></td>
           <td><code>pop</code></td>
-          <td class="hex-cell"><code>#4A8FE2</code></td>
-          <td class="usage-cell">Accent — CTAs, links, active states, highlights</td>
+          <td class="hex-cell"><code>#E8788A</code></td>
+          <td class="usage-cell">Accent — CTAs, links, active states, highlights — coral pink</td>
         </tr>
-<tr class="color-row" data-hex="#3A7FD2">
-          <td><div class="swatch-dot" style="background:#3A7FD2"></div></td>
+<tr class="color-row" data-hex="#D4606F">
+          <td><div class="swatch-dot" style="background:#D4606F"></div></td>
           <td><code>pop-hover</code></td>
-          <td class="hex-cell"><code>#3A7FD2</code></td>
-          <td class="usage-cell">Accent hover/pressed state</td>
+          <td class="hex-cell"><code>#D4606F</code></td>
+          <td class="usage-cell">Accent hover/pressed state — deeper rose</td>
         </tr>
-<tr class="color-row" data-hex="#2DA44E">
-          <td><div class="swatch-dot" style="background:#2DA44E"></div></td>
+<tr class="color-row" data-hex="#7BC4A0">
+          <td><div class="swatch-dot" style="background:#7BC4A0"></div></td>
           <td><code>ok</code></td>
-          <td class="hex-cell"><code>#2DA44E</code></td>
-          <td class="usage-cell">Success, passing, positive</td>
+          <td class="hex-cell"><code>#7BC4A0</code></td>
+          <td class="usage-cell">Success, passing, positive — soft mint green</td>
         </tr>
-<tr class="color-row" data-hex="#D4A015">
-          <td><div class="swatch-dot" style="background:#D4A015"></div></td>
+<tr class="color-row" data-hex="#E8B86D">
+          <td><div class="swatch-dot" style="background:#E8B86D"></div></td>
           <td><code>warn</code></td>
-          <td class="hex-cell"><code>#D4A015</code></td>
-          <td class="usage-cell">Warning, caution</td>
+          <td class="hex-cell"><code>#E8B86D</code></td>
+          <td class="usage-cell">Warning, caution — warm peach gold</td>
         </tr>
-<tr class="color-row" data-hex="#CF222E">
-          <td><div class="swatch-dot" style="background:#CF222E"></div></td>
+<tr class="color-row" data-hex="#D46A6A">
+          <td><div class="swatch-dot" style="background:#D46A6A"></div></td>
           <td><code>err</code></td>
-          <td class="hex-cell"><code>#CF222E</code></td>
-          <td class="usage-cell">Error, failure, destructive</td>
+          <td class="hex-cell"><code>#D46A6A</code></td>
+          <td class="usage-cell">Error, failure, destructive — muted red</td>
         </tr></tbody>
         </table>
       </section>
@@ -295,53 +295,53 @@
         <p class="section-note">16-color mapping for terminals, TUIs, and CLI output. Normal + bright pairs.</p>
         <table class="color-table">
           <thead><tr><th></th><th>Name</th><th>Normal</th><th>Bright</th></tr></thead>
-          <tbody><tr class="color-row" data-hex="#111111">
-          <td><div class="ansi-pair"><div class="swatch-dot" style="background:#111111"></div><div class="swatch-dot" style="background:#666666"></div></div></td>
+          <tbody><tr class="color-row" data-hex="#3D2B2E">
+          <td><div class="ansi-pair"><div class="swatch-dot" style="background:#3D2B2E"></div><div class="swatch-dot" style="background:#8C7478"></div></div></td>
           <td><code>black</code></td>
-          <td class="hex-cell"><code>#111111</code></td>
-          <td class="hex-cell"><code>#666666</code></td>
+          <td class="hex-cell"><code>#3D2B2E</code></td>
+          <td class="hex-cell"><code>#8C7478</code></td>
         </tr>
-<tr class="color-row" data-hex="#CF222E">
-          <td><div class="ansi-pair"><div class="swatch-dot" style="background:#CF222E"></div><div class="swatch-dot" style="background:#E5534B"></div></div></td>
+<tr class="color-row" data-hex="#D46A6A">
+          <td><div class="ansi-pair"><div class="swatch-dot" style="background:#D46A6A"></div><div class="swatch-dot" style="background:#E89090"></div></div></td>
           <td><code>red</code></td>
-          <td class="hex-cell"><code>#CF222E</code></td>
-          <td class="hex-cell"><code>#E5534B</code></td>
+          <td class="hex-cell"><code>#D46A6A</code></td>
+          <td class="hex-cell"><code>#E89090</code></td>
         </tr>
-<tr class="color-row" data-hex="#2DA44E">
-          <td><div class="ansi-pair"><div class="swatch-dot" style="background:#2DA44E"></div><div class="swatch-dot" style="background:#3FB950"></div></div></td>
+<tr class="color-row" data-hex="#7BC4A0">
+          <td><div class="ansi-pair"><div class="swatch-dot" style="background:#7BC4A0"></div><div class="swatch-dot" style="background:#A0D9BF"></div></div></td>
           <td><code>green</code></td>
-          <td class="hex-cell"><code>#2DA44E</code></td>
-          <td class="hex-cell"><code>#3FB950</code></td>
+          <td class="hex-cell"><code>#7BC4A0</code></td>
+          <td class="hex-cell"><code>#A0D9BF</code></td>
         </tr>
-<tr class="color-row" data-hex="#D4A015">
-          <td><div class="ansi-pair"><div class="swatch-dot" style="background:#D4A015"></div><div class="swatch-dot" style="background:#E3B341"></div></div></td>
+<tr class="color-row" data-hex="#E8B86D">
+          <td><div class="ansi-pair"><div class="swatch-dot" style="background:#E8B86D"></div><div class="swatch-dot" style="background:#F0D090"></div></div></td>
           <td><code>yellow</code></td>
-          <td class="hex-cell"><code>#D4A015</code></td>
-          <td class="hex-cell"><code>#E3B341</code></td>
+          <td class="hex-cell"><code>#E8B86D</code></td>
+          <td class="hex-cell"><code>#F0D090</code></td>
         </tr>
-<tr class="color-row" data-hex="#4A8FE2">
-          <td><div class="ansi-pair"><div class="swatch-dot" style="background:#4A8FE2"></div><div class="swatch-dot" style="background:#6CB6FF"></div></div></td>
+<tr class="color-row" data-hex="#9BAFD9">
+          <td><div class="ansi-pair"><div class="swatch-dot" style="background:#9BAFD9"></div><div class="swatch-dot" style="background:#B8CCE8"></div></div></td>
           <td><code>blue</code></td>
-          <td class="hex-cell"><code>#4A8FE2</code></td>
-          <td class="hex-cell"><code>#6CB6FF</code></td>
+          <td class="hex-cell"><code>#9BAFD9</code></td>
+          <td class="hex-cell"><code>#B8CCE8</code></td>
         </tr>
-<tr class="color-row" data-hex="#8B5CF6">
-          <td><div class="ansi-pair"><div class="swatch-dot" style="background:#8B5CF6"></div><div class="swatch-dot" style="background:#A78BFA"></div></div></td>
+<tr class="color-row" data-hex="#E8788A">
+          <td><div class="ansi-pair"><div class="swatch-dot" style="background:#E8788A"></div><div class="swatch-dot" style="background:#F0A0B0"></div></div></td>
           <td><code>magenta</code></td>
-          <td class="hex-cell"><code>#8B5CF6</code></td>
-          <td class="hex-cell"><code>#A78BFA</code></td>
+          <td class="hex-cell"><code>#E8788A</code></td>
+          <td class="hex-cell"><code>#F0A0B0</code></td>
         </tr>
-<tr class="color-row" data-hex="#06B6D4">
-          <td><div class="ansi-pair"><div class="swatch-dot" style="background:#06B6D4"></div><div class="swatch-dot" style="background:#22D3EE"></div></div></td>
+<tr class="color-row" data-hex="#85C7C9">
+          <td><div class="ansi-pair"><div class="swatch-dot" style="background:#85C7C9"></div><div class="swatch-dot" style="background:#A8D8D8"></div></div></td>
           <td><code>cyan</code></td>
-          <td class="hex-cell"><code>#06B6D4</code></td>
-          <td class="hex-cell"><code>#22D3EE</code></td>
+          <td class="hex-cell"><code>#85C7C9</code></td>
+          <td class="hex-cell"><code>#A8D8D8</code></td>
         </tr>
-<tr class="color-row" data-hex="#e2e2e2">
-          <td><div class="ansi-pair"><div class="swatch-dot" style="background:#e2e2e2"></div><div class="swatch-dot" style="background:#fafafa"></div></div></td>
+<tr class="color-row" data-hex="#F0DEE0">
+          <td><div class="ansi-pair"><div class="swatch-dot" style="background:#F0DEE0"></div><div class="swatch-dot" style="background:#FFF5F6"></div></div></td>
           <td><code>white</code></td>
-          <td class="hex-cell"><code>#e2e2e2</code></td>
-          <td class="hex-cell"><code>#fafafa</code></td>
+          <td class="hex-cell"><code>#F0DEE0</code></td>
+          <td class="hex-cell"><code>#FFF5F6</code></td>
         </tr></tbody>
         </table>
 
@@ -482,19 +482,19 @@
       <section id="radius">
         <div class="section-head"><span class="num">06</span><h2>Radius</h2></div>
         <div class="radius-item">
-        <div class="radius-block" style="border-radius:4px"></div>
+        <div class="radius-block" style="border-radius:6px"></div>
         <code>sm</code>
-        <span class="dim">4px</span>
-      </div>
-<div class="radius-item">
-        <div class="radius-block" style="border-radius:8px"></div>
-        <code>md</code>
-        <span class="dim">8px</span>
+        <span class="dim">6px</span>
       </div>
 <div class="radius-item">
         <div class="radius-block" style="border-radius:12px"></div>
-        <code>lg</code>
+        <code>md</code>
         <span class="dim">12px</span>
+      </div>
+<div class="radius-item">
+        <div class="radius-block" style="border-radius:16px"></div>
+        <code>lg</code>
+        <span class="dim">16px</span>
       </div>
 <div class="radius-item">
         <div class="radius-block" style="border-radius:9999px"></div>
@@ -538,11 +538,11 @@ let style = Style::default()
             <h3>Terminal Emulator</h3>
             <span class="path">platforms/terminal/alacritty.toml</span>
             <pre>[colors.primary]
-background = "#fafafa"
-foreground = "#111111"
+background = "#FFF5F6"
+foreground = "#3D2B2E"
 
 [colors.normal]
-blue = "#4A8FE2"</pre>
+blue = "#9BAFD9"</pre>
           </div>
         </div>
       </section>
