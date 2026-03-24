@@ -24,14 +24,14 @@
         "$description": "Borders, dividers, separators — blush pink"
       },
       "surface": {
-        "$value": "#FFFBFB",
+        "$value": "#ffffff",
         "$type": "color",
-        "$description": "Cards, panels, elevated surfaces — warm white"
+        "$description": "Cards, panels, elevated surfaces"
       },
       "bg": {
-        "$value": "#FFF5F6",
+        "$value": "#fafafa",
         "$type": "color",
-        "$description": "Page background — lightest pink tint"
+        "$description": "Page background — clean white"
       },
       "pop": {
         "$value": "#E8788A",
@@ -76,7 +76,7 @@
       "bright-blue": { "$value": "#B8CCE8", "$type": "color" },
       "bright-magenta": { "$value": "#F0A0B0", "$type": "color" },
       "bright-cyan": { "$value": "#A8D8D8", "$type": "color" },
-      "bright-white": { "$value": "#FFF5F6", "$type": "color" }
+      "bright-white": { "$value": "#fafafa", "$type": "color" }
     },
     "typography": {
       "family": {
