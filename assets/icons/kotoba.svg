@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <clipPath id="sq">
+      <path d="M256 0C308 0,360 0,400 8C432 16,460 32,480 52C500 72,508 96,510 128C512 160,512 208,512 256C512 304,512 352,510 384C508 416,500 440,480 460C460 480,432 496,400 504C360 512,308 512,256 512C204 512,152 512,112 504C80 496,52 480,32 460C12 440,4 416,2 384C0 352,0 304,0 256C0 208,0 160,2 128C4 96,12 72,32 52C52 32,80 16,112 8C152 0,204 0,256 0Z"/>
+    </clipPath>
+  </defs>
+  <rect width="512" height="512" fill="#9BAFD9" clip-path="url(#sq)"/>
+  <g fill="none" stroke="#fff" stroke-width="36" stroke-linecap="round" stroke-linejoin="round" clip-path="url(#sq)">
+    <!-- K vertical stem -->
+    <line x1="188" y1="136" x2="188" y2="376"/>
+    <!-- K upper diagonal -->
+    <line x1="336" y1="136" x2="188" y2="268"/>
+    <!-- K lower diagonal -->
+    <line x1="204" y1="252" x2="336" y2="376"/>
+  </g>
+</svg>
