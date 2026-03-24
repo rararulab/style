@@ -1,0 +1,21 @@
+[workspace]
+changelog_config = "cliff.toml"
+changelog_update = true
+dependencies_update = true
+
+# release-plz manages git tags for the Rust crate
+git_tag_enable = true
+git_release_enable = true
+
+pr_labels = ["release"]
+allow_dirty = false
+publish_allow_dirty = false
+semver_check = false
+
+# Publish to crates.io
+publish = true
+
+[[package]]
+name = "rara-style"
+# Only look at crate changes for version bumps
+changelog_path = "crates/rara-style/CHANGELOG.md"
